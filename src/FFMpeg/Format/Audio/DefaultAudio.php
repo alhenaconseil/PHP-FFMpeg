@@ -28,6 +28,9 @@ abstract class DefaultAudio extends EventEmitter implements AudioInterface, Prog
     protected $audioKiloBitrate = 128;
 
     /** @var integer */
+    protected $audioQuality = null;
+
+    /** @var integer */
     protected $audioChannels = null;
 
     /**
@@ -89,6 +92,33 @@ abstract class DefaultAudio extends EventEmitter implements AudioInterface, Prog
         }
 
         $this->audioKiloBitrate = (int) $kiloBitrate;
+        $this->audioQuality = null;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAudioQuality()
+    {
+        return $this->audioQuality;
+    }
+
+    /**
+     * Sets the quality value.
+     *
+     * @param  integer                  $quality
+     * @throws InvalidArgumentException
+     */
+    public function setAudioQuality($quality)
+    {
+        if ($quality < 1) {
+            throw new InvalidArgumentException('Wrong quality value');
+        }
+
+        $this->audioQuality = (int) $quality;
+        $this->audioKiloBitrate = null;
 
         return $this;
     }

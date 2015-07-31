@@ -113,6 +113,10 @@ class Video extends Audio
                 $commands[] = '-b:a';
                 $commands[] = $format->getAudioKiloBitrate() . 'k';
             }
+            if (null !=== $format->getAudioQuality()) {
+                $commands[] = '-q:a';
+                $commands[] = $format->getAudioQuality();
+            }
             if (null !== $format->getAudioChannels()) {
                 $commands[] = '-ac';
                 $commands[] = $format->getAudioChannels();
