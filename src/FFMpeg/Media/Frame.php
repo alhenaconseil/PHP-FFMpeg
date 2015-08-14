@@ -80,12 +80,13 @@ class Frame extends AbstractMediaType
      *
      * @param string  $pathfile
      * @param Boolean $accurate
+     * @param Boolean $disableAutorotate
      *
      * @return Frame
      *
      * @throws RuntimeException
      */
-    public function save($pathfile, $accurate = false)
+    public function save($pathfile, $accurate = false, $disableAutorotate = false)
     {
         /**
          * might be optimized with http://ffmpeg.org/trac/ffmpeg/wiki/Seeking%20with%20FFmpeg
@@ -104,6 +105,10 @@ class Frame extends AbstractMediaType
                 '-vframes', '1', '-ss', (string) $this->timecode,
                 '-f', 'image2'
             );
+        }
+
+        if ($disableAutorotate) {
+            array_unshift($commands, '-noautorotate');
         }
 
         foreach ($this->filters as $filter) {
