@@ -53,12 +53,13 @@ class Video extends Audio
      *
      * @param FormatInterface $format
      * @param string          $outputPathfile
+     * @param boolean         $disableAutorotate
      *
      * @return Video
      *
      * @throws RuntimeException
      */
-    public function save(FormatInterface $format, $outputPathfile)
+    public function save(FormatInterface $format, $outputPathfile, $disableAutorotate = false)
     {
         $commands = array('-y', '-i', $this->pathfile);
 
@@ -106,6 +107,9 @@ class Video extends Audio
             $commands[] = '4';
             $commands[] = '-trellis';
             $commands[] = '1';
+        }
+        if ($disableAutorotate) {
+            $commands[] = '-noautorotate';
         }
 
         if ($format instanceof AudioInterface) {
