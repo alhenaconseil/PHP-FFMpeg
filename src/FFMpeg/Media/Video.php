@@ -61,12 +61,12 @@ class Video extends Audio
      */
     public function save(FormatInterface $format, $outputPathfile, $disableAutorotate = false)
     {
-        $commands = array('-y', '-i');
-        if ($disableAutorotate) {
-            $commands[] = '-noautorotate';
-        }
-        $commands[] = $this->pathfile;
+        $commands = array('-y', '-i', $this->pathfile);
 
+        if ($disableAutorotate) {
+            array_unshift($commands, '-noautorotate');
+        }
+        
         $filters = clone $this->filters;
         $filters->add(new SimpleFilter($format->getExtraParams(), 10));
 
